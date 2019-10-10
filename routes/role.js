@@ -49,7 +49,7 @@ module.exports = function (app) {
             updated_at: new Date()
         };
 
-        Role.updateUser(roleData, (err, data) => {
+        Role.updateRole(roleData, (err, data) => {
             if (data && data.message) {
                 res.json({
                     success: true,
@@ -65,7 +65,7 @@ module.exports = function (app) {
     });
 
     app.delete('/role/:id', (req, res) => {
-        Role.deleteUser(parseInt(req.params.id), (err, data) => {
+        Role.deleteRole(parseInt(req.params.id), (err, data) => {
             if (data && data.message == 'deleted' || data.message == 'not exists') {
                 res.json({
                     success: true,

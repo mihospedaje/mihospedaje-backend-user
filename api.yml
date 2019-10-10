@@ -1,0 +1,373 @@
+#Test with: http://editor.swagger.io/
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservicio Usuarios
+  description: Javascript + MySQL
+  license:
+    name: Arquitectura de Software 2019-II
+host: 192.168.99.101:3000
+
+tags:
+- name: "User"
+- name: "Role"
+
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /users:
+    post:
+      tags:
+      - "User"
+      summary: Registrar un nuevo usuario
+      operationId: createUser
+      parameters:
+        - name: user
+          in: body
+          required: true
+          description: User Object
+          schema:
+            $ref: '#/definitions/UserInput'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    get:
+      tags:
+      - "User"
+      summary: Retornar todos los usuarios
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/UsersList'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /users/{code}:
+    get:
+      tags:
+      - "User"
+      summary: Retorna el usuario con el codigo dado
+      operationId: getUserByCode
+      parameters:
+        - name: code
+          in: path
+          description: El codigo del usurio retornado
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/User'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    put:
+      tags:
+      - "User"
+      summary: Actualiza el usuario con el codigo dado
+      operationId: updateUser
+      parameters:
+        - name: code
+          in: path
+          description: Codigo del usuario actualizado
+          required: true
+          type: integer
+        - name: User
+          in: body
+          required: true
+          description: User Object
+          schema:
+            $ref: '#/definitions/UserInput'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    delete:
+      tags:
+      - "User"
+      summary: Elimina el usuario con el codigo dado
+      operationId: deleteUser
+      parameters:
+        - name: code
+          in: path
+          description: Codigo del usuario a ser borrado
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+
+  /role:
+    post:
+      tags:
+      - "Role"
+      summary: Crear un rol
+      operationId: createRole
+      parameters:
+        - name: role
+          in: body
+          required: true
+          description: Role Object
+          schema:
+            $ref: '#/definitions/RoleInput'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    get:
+      tags:
+      - "Role"
+      summary: Retornar todos los roles
+      operationId: getAllRoles
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/RolesList'
+        '406':
+          description: Not Acceptable (Invalid Params)
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /role/{code}:
+    get:
+      tags:
+      - "Role"
+      summary: Retorna el rol con el codigo dado
+      operationId: getRoleByCode
+      parameters:
+        - name: code
+          in: path
+          description: El codigo del rol retornado
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Role'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    put:
+      tags:
+      - "Role"
+      summary: Actualiza el role con el codigo dado
+      operationId: updateRole
+      parameters:
+        - name: code
+          in: path
+          description: Codigo del role actualizado
+          required: true
+          type: integer
+        - name: Role
+          in: body
+          required: true
+          description: Role Object
+          schema:
+            $ref: '#/definitions/RoleInput'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    delete:
+      tags:
+      - "Role"
+      summary: Elimina el rol con el codigo dado
+      operationId: deleteRole
+      parameters:
+        - name: code
+          in: path
+          description: Codigo del rol a ser eliminado
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+definitions:
+
+  # Users
+  User:
+    type: object
+    properties:
+      code:
+        type: integer
+      name:
+        type: string
+      lastname:
+        type: string
+      email:
+        type: string
+      birthdate:
+        type: string
+      password:
+        type: string
+
+  UserInput:
+    type: object
+    properties:
+      name:
+        type: string
+      lastname:
+        type: string
+      email:
+        type: string
+      birthdate:
+        type: string
+      password:
+        type: string
+
+  UsersList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+          
+  Role:
+    type: object
+    properties:
+      code:
+        type: integer
+      namerole:
+        type: string
+        
+  RoleInput:
+    type: object
+    properties:
+      namerole:
+        type: string
+      
+  RolesList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/Role'
+# Errors
+  ErrorModel:
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      message:
+        type: string
+      code:
+        type: number
+      description:
+        type: object

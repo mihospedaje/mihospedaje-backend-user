@@ -2,10 +2,11 @@ const mysql = require('mysql');
 
 
 connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'user'
+    host            : process.env.DATABASE_HOST,
+    port            : process.env.MYSQL_PORT,
+    user            : process.env.MYSQL_USER,
+    password        : process.env.MYSQL_PASSWORD,
+    database        : process.env.MYSQL_DATABASE
 });
 
 let RoleModel = {};
@@ -82,7 +83,7 @@ RoleModel.updateRole = (roleData, callback) => {
     };
 }
 
-RoleModel.deleteUser = (id, callback) => {
+RoleModel.deleteRole = (id, callback) => {
     if (connection) {
         let sql = `
         SELECT * FROM role WHERE id = ${connection.escape(id)}`;
