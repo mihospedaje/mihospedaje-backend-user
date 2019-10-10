@@ -6,19 +6,19 @@ const { wrapper } = require('../middleware/error');
 const { check, validationResult } = require('express-validator');
 
 module.exports = function (app) {
-    app.get('/users', (req, res) => {
+    app.get('/api/v1/users', (req, res) => {
         User.getusers((err, data) => {
             res.status(200).json(data);
         });
     });
-    app.get('/users/:id', (req, res) => {
+    app.get('/api/v1/users/:id', (req, res) => {
         const userData = {
             id: parseInt(req.params.id)};
         User.getuserscode(userData,(err, data) => {
             res.status(200).json(data);
         });
     });
-    app.post('/users',[ 
+    app.post('/api/v1/users',[ 
   check('name').isString(),
   check('lastname').isString(),
   check('email').isEmail(),
@@ -55,7 +55,7 @@ module.exports = function (app) {
         })
     });
 
-    app.put('/users/:id',[ 
+    app.put('/api/v1/users/:id',[ 
         check('name').isString(),
         check('lastname').isString(),
         check('email').isEmail(),
@@ -89,7 +89,7 @@ module.exports = function (app) {
         })
     });
 
-    app.delete('/users/:id', (req, res) => {
+    app.delete('/api/v1/users/:id', (req, res) => {
         User.deleteUser(parseInt(req.params.id), (err, data) => {
             if (data && data.message == 'deleted' || data.message == 'not exists') {
                 res.json({

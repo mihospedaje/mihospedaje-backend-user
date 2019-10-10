@@ -6,7 +6,7 @@ info:
   description: Javascript + MySQL
   license:
     name: Arquitectura de Software 2019-II
-host: 192.168.99.101:3000
+host: 192.168.1.10:3000
 
 tags:
 - name: "User"
@@ -19,7 +19,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /users:
+  /api/v1/users:
     post:
       tags:
       - "User"
@@ -62,7 +62,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /users/{code}:
+  /api/v1/users/{code}:
     get:
       tags:
       - "User"
@@ -153,7 +153,7 @@ paths:
             $ref: '#/definitions/ErrorModel'
 
 
-  /role:
+  /api/v1/role:
     post:
       tags:
       - "Role"
@@ -196,7 +196,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /role/{code}:
+  /api/v1/role/{code}:
     get:
       tags:
       - "Role"
@@ -229,12 +229,12 @@ paths:
     put:
       tags:
       - "Role"
-      summary: Actualiza el role con el codigo dado
+      summary: Actualiza el rol con el codigo dado
       operationId: updateRole
       parameters:
         - name: code
           in: path
-          description: Codigo del role actualizado
+          description: Codigo del rol actualizado
           required: true
           type: integer
         - name: Role

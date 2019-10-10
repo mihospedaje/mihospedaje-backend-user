@@ -11,14 +11,14 @@ module.exports = function (app) {
             res.status(200).json(data);
         });
     });
-    app.get('/role/:id', (req, res) => {
+    app.get('/api/v1/role/:id', (req, res) => {
         const roleData = {
             id: parseInt(req.params.id)};
         Role.getrolecode(roleData,(err, data) => {
             res.status(200).json(data);
         });
     });
-    app.post('/role',[check('namerole').isString()], (req, res) => {
+    app.post('/api/v1/role',[check('namerole').isString()], (req, res) => {
         const roleData = {
             id: null,
             namerole: req.body.namerole,
@@ -41,7 +41,7 @@ module.exports = function (app) {
         })
     });
 
-    app.put('/role/:id',[check('namerole').isString()],(req, res) => {
+    app.put('/api/v1/role/:id',[check('namerole').isString()],(req, res) => {
         const roleData = {
             id: parseInt(req.params.id),
             namerole: req.body.namerole,
@@ -64,7 +64,7 @@ module.exports = function (app) {
         })
     });
 
-    app.delete('/role/:id', (req, res) => {
+    app.delete('/api/v1/role/:id', (req, res) => {
         Role.deleteRole(parseInt(req.params.id), (err, data) => {
             if (data && data.message == 'deleted' || data.message == 'not exists') {
                 res.json({
