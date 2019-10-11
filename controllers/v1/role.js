@@ -68,7 +68,7 @@ RoleModel.updateRole = (roleData, callback) => {
     if (connection) {
         const sql = `
         UPDATE role SET 
-        name = ${connection.escape(roleData.namerole)},
+        namerole = ${connection.escape(roleData.namerole)}
          WHERE id = ${connection.escape(roleData.id)}`;
 
         connection.query(sql, (err, result) => {

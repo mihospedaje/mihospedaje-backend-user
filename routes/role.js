@@ -6,7 +6,7 @@ const { wrapper } = require('../middleware/error');
 const { check, validationResult } = require('express-validator/check');
 
 module.exports = function (app) {
-    app.get('/role', (req, res) => {
+    app.get('/api/v1/role', (req, res) => {
         Role.getrole((err, data) => {
             res.status(200).json(data);
         });
