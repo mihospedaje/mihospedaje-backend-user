@@ -9,6 +9,8 @@ connection = mysql.createConnection({
     database        : process.env.MYSQL_DATABASE
 });
 
+
+
 let UserModel = {};
 UserModel.getusers = (callback) => {
     if (connection) {
@@ -56,6 +58,7 @@ UserModel.insertUser = (userData, callback) => {
                 if (err) {
                     throw err
                 } else {
+                    console.log(result.insertId);
                     callback(null, {
                         'insertId': result.insertId
                     })

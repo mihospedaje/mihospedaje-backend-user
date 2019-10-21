@@ -15,7 +15,17 @@ module.exports = function (app) {
         const userData = {
             id: parseInt(req.params.id)};
         User.getuserscode(userData,(err, data) => {
-            res.status(200).json(data);
+            res.status(200).json({
+				id: data[0].id,
+                name: data[0].name,
+                lastname: data[0].lastname,
+                birthdate: data[0].birthdate,
+				email: data[0].email,
+                password: data[0].password,
+				idrole: data[0].idrole,
+				created_at: data[0].created_at,
+				updated_at: data[0].updated_at
+			});
         });
     });
     app.post('/api/v1/users',[ 
@@ -42,9 +52,14 @@ module.exports = function (app) {
         }
         User.insertUser(userData, (err, data) => {
             if (data && data.insertId) {
-                res.json({
-                    success: true,
-                    data: userData
+                res.status(201).json({
+                    id: data.insertId,
+                    name: userData.name,
+					lastname: userData.lastname,
+					birthdate: userData.birthdate,
+					email: userData.email,
+					password: userData.password,
+					idrole:userData.idrole
                 })
             } else {
                 res.status(500).json({

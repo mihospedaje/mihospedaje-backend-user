@@ -15,7 +15,10 @@ module.exports = function (app) {
         const roleData = {
             id: parseInt(req.params.id)};
         Role.getrolecode(roleData,(err, data) => {
-            res.status(200).json(data);
+            res.status(200).json({
+                id: data[0].id,
+                namerole: data[0].namerole
+            });
         });
     });
     app.post('/api/v1/role',[check('namerole').isString()], (req, res) => {
@@ -28,9 +31,10 @@ module.exports = function (app) {
         console.log(roleData);
         Role.insertRole(roleData, (err, data) => {
             if (data && data.insertId) {
-                res.json({
-                    success: true,
-                    data: roleData
+                res.status(201).json({
+                    id: data.insertId,
+                    namerole: roleData.namerole,
+				
                 })
             } else {
                 res.status(500).json({
