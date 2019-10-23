@@ -28,6 +28,21 @@ module.exports = function (app) {
 			});
         });
     });
+    app.get('/api/v1/users/:email', (req, res) => {
+        const userData = {
+            email: parseInt(req.params.email)};
+        User.getusersByEmail(userData,(err, data) => {
+            res.status(200).json({
+				id: data[0].id,
+                name: data[0].name,
+                lastname: data[0].lastname,
+                birthdate: data[0].birthdate,
+				email: data[0].email,
+                password: data[0].password,
+				idrole: data[0].idrole
+			});
+        });
+    });
     app.post('/api/v1/users',[ 
   check('name').isString(),
   check('lastname').isString(),

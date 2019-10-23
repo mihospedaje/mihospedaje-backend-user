@@ -41,6 +41,20 @@ UserModel.getuserscode = (userData,callback) => {
         )
     }
 }
+UserModel.getusersByEmail = (email, callback) => {
+    if (connection){
+        connection.query(
+            'SELECT * FROM users where email = ?', email,
+            (err, row) => {
+                if (err){
+                    console.log(err);
+                } else {
+                    callback(null, row);
+                }
+            }
+        )
+    }
+}
 UserModel.insertUser = (userData, callback) => {
     if (connection) {
         
