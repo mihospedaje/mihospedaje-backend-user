@@ -10,6 +10,7 @@ connection = mysql.createConnection({
 });
 
 
+
 let RoleModel = {};
 RoleModel.getrole = (callback) => {
     if (connection) {

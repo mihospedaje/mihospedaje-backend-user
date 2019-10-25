@@ -9,6 +9,13 @@ connection = mysql.createConnection({
     database        : process.env.MYSQL_DATABASE
 });
 
+/*var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'root',
+    database : 'user'
+  });*/
+
 
 
 let UserModel = {};

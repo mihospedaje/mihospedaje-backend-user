@@ -55,9 +55,10 @@ module.exports = function (app) {
 
         Role.updateRole(roleData, (err, data) => {
             if (data && data.message) {
-                res.json({
-                    success: true,
-                    data: roleData
+                res.status(201).json({
+                    id: roleData.id,
+                    namerole: roleData.namerole,
+				
                 })
             } else {
                 res.status(500).json({

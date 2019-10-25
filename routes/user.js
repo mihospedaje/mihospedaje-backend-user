@@ -106,9 +106,14 @@ module.exports = function (app) {
 
         User.updateUser(userData, (err, data) => {
             if (data && data.message) {
-                res.json({
-                    success: true,
-                    data: userData
+                res.status(201).json({
+                    id: userData.id,
+                    name: userData.name,
+					lastname: userData.lastname,
+					birthdate: userData.birthdate,
+					email: userData.email,
+					password: userData.password,
+					idrole:userData.idrole
                 })
             } else {
                 res.status(500).json({
