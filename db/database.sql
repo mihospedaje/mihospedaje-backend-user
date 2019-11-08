@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
     password VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
     idrole INT(10) unsigned NOT NULL,
+    image varchar(1000) COLLATE utf8_unicode_ci,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     INDEX(id),
@@ -33,6 +34,21 @@ CREATE TABLE IF NOT EXISTS users (
         ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARACTER SET = utf8;
 DESCRIBE users;
+
+CREATE TABLE IF NOT EXISTS favorite (
+    id INT(10) unsigned NOT NULL AUTO_INCREMENT,
+    user_id int(10) unsigned NOT NULL,
+    lodging_id int(10) unsigned NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    INDEX(id),
+    PRIMARY KEY(id),
+    FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARACTER SET = utf8;
+DESCRIBE favorite;
 
 ALTER USER 'mysql'@'%' IDENTIFIED WITH mysql_native_password BY '1234';
 FLUSH PRIVILEGES; 

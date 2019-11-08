@@ -29,6 +29,7 @@ app.use(morgan('dev'));
 const healthcheck = require('./routes/healthcheck');
 const user = require('./routes/user')(app);
 const role = require('./routes/role')(app);
+const favorite = require('./routes/favorite')(app);
 // Implement routes
 app.use('/api/v1', healthcheck);
 //app.use('/api/v1', user);
