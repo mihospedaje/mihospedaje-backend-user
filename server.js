@@ -30,6 +30,8 @@ const healthcheck = require('./routes/healthcheck');
 const user = require('./routes/user')(app);
 const role = require('./routes/role')(app);
 const favorite = require('./routes/favorite')(app);
+const ldap = require('./routes/ldap')(app);
+
 // Implement routes
 app.use('/api/v1', healthcheck);
 //app.use('/api/v1', user);
