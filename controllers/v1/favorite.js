@@ -33,6 +33,22 @@ FavoriteModel.getfavorite = (callback) => {
         )
     }
 }
+
+FavoriteModel.getfavoriteuser= (user_id,callback) => {
+    if (connection) {
+        connection.query(
+            'SELECT * FROM favorite where user_id=?',user_id,
+            (err, rows) => {
+                if (err) {
+                    throw err
+                } else {
+                    callback(null, rows)
+                }
+            }
+        )
+    }
+}
+
 FavoriteModel.getfavoritecode = (favoriteData,callback) => {
     if (connection) {
         connection.query(

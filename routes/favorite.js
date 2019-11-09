@@ -14,12 +14,27 @@ module.exports = function (app) {
     app.get('/api/v1/favorite/:id', (req, res) => {
         const favoriteData = {
             id: parseInt(req.params.id)};
+            
         Favorite.getfavoritecode(favoriteData,(err, data) => {
+            if(err){
+                throw err
+            }else{
             res.status(200).json({
                 id: data[0].id,
                 user_id: data[0].user_id,
                 lodging_id: data[0].lodging_id
-            });
+            });}
+        });
+    });
+    app.get('/api/v1/favorite/user/:user_id', (req, res) => {
+        console.log("params: ", req.params.user_id);
+        Favorite.getfavoriteuser(req.params.user_id,(err, data) => {
+            if(err){
+                throw err
+            }else{
+                res.status(200).json(data);
+            }
+            
         });
     });
     app.post('/api/v1/favorite',[check('user_id').isInt(),check('lodging_id').isInt()], (req, res) => {
