@@ -33,7 +33,7 @@ module.exports = function(app){
         
         // generar token
         const body = JSON.stringify(req.body)
-        //console.log(body)
+        
         // el Token dura una hora
         const token = jwt.sign({body},'secret_key',{
             expiresIn: 60 * 60 * 1
@@ -60,32 +60,6 @@ module.exports = function(app){
             
         });
         
-    });
-
-    // Autenticar un administrador
-    app.post("/authAdmin", (req, res) => {
-        
-        const email = 'cn='+req.body.email+',ou=administrador,dc=arqsoft,dc=unal,dc=edu,dc=co';
-        const password = req.body.password;
-        const body = JSON.stringify(req.body)
-        const token = jwt.sign({body},'secret_key');
-        var opts = { filter: '(objectclass=user)',scope: 'sub',attributes: ['objectGUID']};
-        
-        client.bind(email, password , function (err) {        
-            if(err){
-                res.status(200).json({
-                    success: false,
-                    data: 'Admin no autenticado',
-                    token: ""
-                })
-            } else {
-                res.status(200).json({
-                    success: true,
-                    data: 'Admin autenticado',
-                    token: token
-                })
-            }
-        });
     });
 
     // Crear un nuevo usuario
@@ -124,9 +98,9 @@ module.exports = function(app){
             }
         });
     });
-    
-    // Crear un administrador nuevo
-    app.post("/addAdmin", (req, res) => {
+
+    //modificar contraseña
+    app.post("/update", (req, res) => {
         const email = 'cn=admin,dc=arqsoft,dc=unal,dc=edu,dc=co';
         const password = 'admin'
         
@@ -136,27 +110,28 @@ module.exports = function(app){
                     success: false,
                     data: 'LDAP: sin acceso'
                 })
+
             } else {
+
                 const email = req.body.email;
-                const password = req.body.passw;
-                const dn = 'cn='+req.body.email+',ou=administrador,dc=arqsoft,dc=unal,dc=edu,dc=co';
-                uid = Math.random(100000);
-                var entry = {
-                    cn: email,
-                    objectclass: ["top", "inetorgperson"],
-                    sn: email,
-                    mail: email,
-                    userPassword: password,
-                    uid: uid
-                };
-                client.add( dn, entry, function(err) {
+                const password = req.body.password;
+                const dn = 'cn='+req.body.email+',ou=mihospedaje,dc=arqsoft,dc=unal,dc=edu,dc=co';
+                var change = new ldap.Change({
+                    operation: 'replace',
+                    modification: {
+                        userPassword: password,
+                    }
+                  });
+                client.modify( dn, change, function(err) {
                     if(err){
-                        res.status(200).json({success: false,data: 'LDAP: admin no creado'})
+                        res.status(200).json({success: false,data: 'LDAP: contraseña no modificada'})
                     }else{
-                        res.status(200).json({success: true,data: 'LDAP: admin creado'})
+                        res.status(200).json({success: true,data: 'LDAP: contraseña modificada'})
                     }   
                 });
             }
         });
     });
+
 }
+
