@@ -12,11 +12,11 @@ module.exports = function (app) {
         });
     });
     
-    app.get('/api/v1/users/:username', (req, res) => {
+    app.get('/api/v1/users/email/:username', (req, res) => {
         console.log("params: ", req.params.username);
             User.getusersByEmail(req.params.username, (err, data) => {
                 if (err){
-                    console.log(err)
+                    throw err
                 }else{
                     res.status(200).json({
                         id: data[0].id,
@@ -25,7 +25,8 @@ module.exports = function (app) {
                         birthdate: data[0].birthdate,
 				        email: data[0].email,
                         password: data[0].password,
-				        idrole: data[0].idrole
+                        idrole: data[0].idrole,
+                        image: data[0].image,
                     });
                 }
             })
@@ -42,7 +43,8 @@ module.exports = function (app) {
 				email: data[0].email,
                 password: data[0].password,
 				idrole: data[0].idrole,
-				created_at: data[0].created_at,
+                image: data[0].image,
+                created_at: data[0].created_at,
 				updated_at: data[0].updated_at
 			});
         });
@@ -63,6 +65,7 @@ app.post('/api/v1/users',[
             email: req.body.email,
             password: req.body.password,
             idrole:req.body.idrole,
+            image: req.body.image,
             created_at: new Date(),
             updated_at: new Date(),
         };
@@ -79,7 +82,8 @@ app.post('/api/v1/users',[
 					birthdate: userData.birthdate,
 					email: userData.email,
 					password: userData.password,
-					idrole:userData.idrole
+                    idrole:userData.idrole,
+                    image: userData.image
                 })
             } else {
                 res.status(500).json({
@@ -105,6 +109,7 @@ app.post('/api/v1/users',[
             email: req.body.email,
             password: req.body.password,
             idrole:req.body.idrole,
+            image: req.body.image,
             created_at: new Date(),
             updated_at: new Date()
         };
@@ -118,7 +123,8 @@ app.post('/api/v1/users',[
 					birthdate: userData.birthdate,
 					email: userData.email,
 					password: userData.password,
-					idrole:userData.idrole
+                    idrole:userData.idrole,
+                    image: userData.image
                 })
             } else {
                 res.status(500).json({
